@@ -1,4 +1,4 @@
-SERVER_GUIDE.md
+SERVER_GUIDE
 
 #  Sunucu Güncelleme ve Deployment Rehberi
 
