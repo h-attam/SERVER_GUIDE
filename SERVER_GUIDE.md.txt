@@ -1,0 +1,62 @@
+SERVER_GUIDE.md
+
+#  Sunucu Güncelleme ve Deployment Rehberi
+
+Bu doküman, Linux (Ubuntu) sunucularda çalışan projelerin güncellenmesi ve temel sunucu bakımının yapılması için gerekli adımları içerir.
+
+---
+
+##  1. Sunucuya Bağlantı (SSH)
+
+Terminali açın ve sunucuya güvenli bağlantı sağlayın.
+
+```bash
+ssh kullanici_adi@sunucu_ip_adresi
+Not: Şifre sorulduğunda yazdığınız karakterler ekranda görünmez. Şifrenizi yazıp Enter tuşuna basın.
+
+ 2. Sistem Güncellemeleri
+Projeyi güncellemeden önce işletim sisteminin paketlerini tazelemek iyi bir uygulamadır.
+Adım 1: Listeyi Güncelle
+Bash
+
+sudo apt update
+Adım 2: Yüklemeyi Başlat
+Bash
+
+sudo apt upgrade
+(Onay isterse Y tuşuna basıp Enter yapın.)
+
+ 3. Projeyi Güncelleme (Deployment)
+Uygulamanın en güncel kodlarını Github'dan sunucuya çekmek için aşağıdaki adımları izleyin.
+1. Proje Klasörüne Git
+Bash
+
+cd /var/www/proje-klasoru-adi
+2. Kodları Çek (Git Pull)
+Bash
+
+git pull origin main
+(Eğer branch adınız master ise main yerine master yazın.)
+
+ 4. Bağımlılıkları Yükleme
+Eğer package.json dosyasında değişiklik varsa (yeni kütüphane eklendiyse), modülleri güncelleyin.
+Bash
+
+npm install
+
+ 5. Uygulamayı Yeniden Başlatma
+Değişikliklerin aktif olması için servisleri yeniden başlatın.
+Node.js / React (PM2 Kullanılıyorsa):
+Bash
+
+pm2 restart all
+Nginx Web Sunucusu (Gerekirse):
+Bash
+
+sudo systemctl restart nginx
+
+ Kontrol Listesi
+İşlem tamamlandıktan sonra sitenin çalıştığından emin olun:
+* [ ] Web sitesi tarayıcıda açılıyor mu?
+* [ ] Terminalde herhangi bir hata mesajı var mı?
+* [ ] Servis durumu aktif mi? (pm2 status veya sudo systemctl status nginx)
